@@ -67,7 +67,8 @@ class APT_HIDDEN pkgCacheGenerator					/*{{{*/
    };
    struct hash {
       uint32_t operator()(string_pointer const &that) const {
-	 return XXH3_64bits(that.data(), that.size) & 0xFFFFFFFF;
+	 // return XXH3_64bits(that.data(), that.size) & 0xFFFFFFFF;
+    return XXH3_64(that.data(), that.size) & 0xFFFFFFFF;
       }
    };
 

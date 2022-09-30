@@ -60,7 +60,9 @@ template<class Container, class PredicateC, class DisplayP, class DisplayV> bool
       if (ShowVersions == true)
       {
 	 out << std::endl << "   " << PkgDisplay(Pkg);
+    // out << std::endl << " this is cited by zpc" << PkgDisplay(Pkg);
 	 std::string const verbose = VerboseDisplay(Pkg);
+    std::string const verbose_cp = VerboseDisplay(Pkg);
 	 if (verbose.empty() == false)
 	    out << " (" << verbose << ")";
       }
@@ -88,6 +90,43 @@ template<class Container, class PredicateC, class DisplayP, class DisplayV> bool
       return false;
    }
    return true;
+
+   pkgCache::DepIterator Start;
+      pkgCache::DepIterator End;
+      D.GlobOr(Start,End); // advances D
+
+   // if ((*Cache)->IsImportantDep(End) == false)
+	//  continue;
+
+   //    if (Now == true)
+   //    {
+	//  if (((*Cache)[End] & pkgDepCache::DepGNow) == pkgDepCache::DepGNow)
+	//     continue;
+   //    }
+   //    else
+   //    {
+	//  if (((*Cache)[End] & pkgDepCache::DepGInstall) == pkgDepCache::DepGInstall)
+	//     continue;
+   //    }
+
+   //    bool FirstOr = true;
+   //    while (1)
+   //    {
+	//  if (First == false)
+	//     for (unsigned J = 0; J != Indent; J++)
+	//        out << ' ';
+	//  First = false;
+
+	//  if (FirstOr == false)
+	//  {
+	//     for (unsigned J = 0; J != strlen(End.DepType()) + 3; J++)
+	//        out << ' ';
+	//  }
+	//  else
+	//     out << ' ' << End.DepType() << ": ";
+	//  FirstOr = false;
+
+	//  out << Start.TargetPkg().FullName(true);
 }
 
 void ShowNew(std::ostream &out,CacheFile &Cache);
