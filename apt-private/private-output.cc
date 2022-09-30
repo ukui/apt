@@ -314,6 +314,24 @@ void ListSingleVersion(pkgCacheFile &CacheFile, pkgRecords &records,	/*{{{*/
       output.erase(output.length() - 1);
 
    out << output;
+   string TarFullName = Start.TargetPkg().FullName(true);
+   out << "----------";
+   out << TarFullName;
+   out << "----------";
+   int n, m, v1, v2;
+	cin >> n >> m;
+	// 更好的实现
+   // Adj.assign(n, list<int>());
+	// inDegree.assign(n, 0);
+	// while (m--)
+	// {
+	// 	cin >> v1 >> v2;
+	// 	Adj[v1].push_back(v2);
+	// 	inDegree[v2]++;
+	// }
+	// for (int i = 0; i < n;i++)
+	// 	if (inDegree[i] == 0) stk.push(i);
+   // out << n;
 }
 									/*}}}*/
 // ShowBroken - Debugging aide						/*{{{*/
@@ -442,6 +460,31 @@ static void ShowBrokenPackage(ostream &out, pkgCacheFile * const Cache, pkgCache
 	 ++Start;
       }
    }
+   // pkgCache::VerIterator myVer = (*Cache)[Targ].InstVerIter(*Cache);
+   // 拓扑排序
+   // int num = 0;				//记录加入拓扑排序的顶点数
+	// queue<int> q;
+	// for (int i = 0; i < n; i++)
+	// 	if (inDegree[i] == 0)
+	// 		q.push(i);		//将所有入度为0的顶点入队
+	// while (!q.empty()) {
+	// 	int u = q.front();		//取队首顶点u
+	// 	cout << u << " ";		
+	// 	q.pop();
+	// 	for (int i = 0; i < G[u].size(); i++) {
+	// 		int v = G[u][i];		//u的后继节点
+	// 		inDegree[v]--;			//v的入度减1
+	// 		if (inDegree[v] == 0)		//顶点v的入度减为0则入队
+	// 			q.push(v);
+	// 	}
+	// 	G[u].clear();			//清空顶点u的所有出边
+	// 	num++;
+	// }
+	// if (num == n)				//加入拓扑序列的顶点数为n，说明拓扑排序成功，否则，失败
+	// 	return true;
+	// else
+	// 	return false;
+
 }
 void ShowBroken(ostream &out, CacheFile &Cache, bool const Now)
 {
@@ -468,6 +511,8 @@ void ShowBroken(ostream &out, pkgCacheFile &Cache, bool const Now)
 void ShowNew(ostream &out,CacheFile &Cache)
 {
    SortedPackageUniverse Universe(Cache);
+
+   out << _("This is cited by zpc!!!") << endl;
    ShowList(out,_("The following NEW packages will be installed:"), Universe,
 	 [&Cache](pkgCache::PkgIterator const &Pkg) { return Cache[Pkg].NewInstall(); },
 	 &PrettyFullName,
@@ -478,6 +523,8 @@ void ShowNew(ostream &out,CacheFile &Cache)
 void ShowDel(ostream &out,CacheFile &Cache)
 {
    SortedPackageUniverse Universe(Cache);
+
+   out << _("This is cited by zpc!!!") << endl;
    ShowList(out,_("The following packages will be REMOVED:"), Universe,
 	 [&Cache](pkgCache::PkgIterator const &Pkg) { return Cache[Pkg].Delete(); },
 	 [&Cache](pkgCache::PkgIterator const &Pkg)
